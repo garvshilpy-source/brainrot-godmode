@@ -1,3 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brainrot GOD MODE</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+        }
+        button {
+            background: gold;
+            font-weight: bold;
+        }
+        .card {
+            background: #111;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🧠 Brainrot GOD MODE</h1>
+
+<input type="text" id="psLink" placeholder="Paste PS link">
+<br>
+
+<button onclick="start()">Start</button>
+<button onclick="markSpawn()">OG Spawned</button>
+
+<div id="output"></div>
+
 <script>
 
 let interval;
@@ -24,15 +66,13 @@ function markSpawn() {
 
     if (data.last) {
         let diff = Math.floor((now - data.last)/1000);
-
-        // 🔥 Adaptive learning (adjust cycle)
         data.cycle = Math.floor((data.cycle + diff) / 2);
     }
 
     data.last = now;
     localStorage.setItem(currentPS, JSON.stringify(data));
 
-    alert("OG Recorded & Learning ✅");
+    alert("OG Recorded ✅");
 }
 
 function run() {
@@ -51,7 +91,6 @@ function run() {
         let diff = Math.floor((now - data.last)/1000);
 
         let cycle = data.cycle;
-
         let passed = diff % cycle;
         let remaining = cycle - passed;
 
@@ -59,22 +98,9 @@ function run() {
         let range = getRange(remaining);
 
         document.getElementById("output").innerHTML = `
-            <div class="card">
-                🟡 Phase: ${phase}
-            </div>
-
-            <div class="card">
-                ⏳ Next OG In: ${format(remaining)}
-            </div>
-
-            <div class="card">
-                🎯 Spawn Window:
-                <br>${range}
-            </div>
-
-            <div class="card">
-                🧠 Learned Cycle: ${cycle}s
-            </div>
+            <div class="card">🟡 Phase: ${phase}</div>
+            <div class="card">⏳ Next OG In: ${format(remaining)}</div>
+            <div class="card">🎯 Range: ${range}</div>
         `;
 
     }, 1000);
@@ -82,18 +108,15 @@ function run() {
 
 function getPhase(passed, cycle) {
     let p = passed / cycle;
-
-    if (p < 0.3) return "EARLY PHASE";
-    if (p < 0.7) return "MID PHASE";
-    return "LATE PHASE (SPAWN SOON)";
+    if (p < 0.3) return "EARLY";
+    if (p < 0.7) return "MID";
+    return "LATE (SOON)";
 }
 
 function getRange(rem) {
     let now = new Date();
-
     let start = new Date(now.getTime() + (rem-10)*1000);
     let end = new Date(now.getTime() + rem*1000);
-
     return formatClock(start) + " - " + formatClock(end);
 }
 
@@ -110,6 +133,9 @@ function formatClock(d) {
 }
 
 </script>
+
+</body>
+</html>
 
 <button onclick="markSpawn()">OG Spawned</button>
   
